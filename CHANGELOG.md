@@ -6,6 +6,22 @@ Ressources :
 - [release-please](https://github.com/google-github-actions/release-please-action) (automated releases)
 - [Semantic Versioning](https://semver.org/) & [Calendar Versioning](https://calver.org/)
 
+## [2024.9.0](https://github.com/gip-inclusion/le-marche/compare/v2024.8.0...v2024.9.0) (2025-01-10)
+
+
+### Features
+
+* Action admin pour l'anonymisation des utilisateurs ([#1624](https://github.com/gip-inclusion/le-marche/issues/1624)) ([0dc2970](https://github.com/gip-inclusion/le-marche/commit/0dc2970078a56df4405e8668b91000779105c69a))
+* Retirer la co-traitance ([#1623](https://github.com/gip-inclusion/le-marche/issues/1623)) ([d3676d1](https://github.com/gip-inclusion/le-marche/commit/d3676d161d3972745f4024fc18e9dd0e1b36e903))
+
+
+### Bug Fixes
+
+* **Activités des structures:** Correction du formulaire d'édition des activités ([#1625](https://github.com/gip-inclusion/le-marche/issues/1625)) ([432d7a2](https://github.com/gip-inclusion/le-marche/commit/432d7a256646bb5d410e1750907cbb6df4d93a82))
+* Changement de conditions de synchronisation des DDB vers le crm brevo ([#1622](https://github.com/gip-inclusion/le-marche/issues/1622)) ([393f227](https://github.com/gip-inclusion/le-marche/commit/393f227e3b3f21e3615445799a2dbcebdd9258e6))
+* **Email:** Retour sur l'enregistrement du log avant envoi ([#1629](https://github.com/gip-inclusion/le-marche/issues/1629)) ([65a2fe6](https://github.com/gip-inclusion/le-marche/commit/65a2fe6653007257732df4365c1063f0726a201d))
+* **Structures:** Correction sur le contrôle d'unicité du nom commercial ([#1606](https://github.com/gip-inclusion/le-marche/issues/1606)) ([171abff](https://github.com/gip-inclusion/le-marche/commit/171abff7a5c4aaaae933356a22768842eb2a33a3))
+
 ## [2024.8.0](https://github.com/gip-inclusion/le-marche/compare/v2024.7.0...v2024.8.0) (2025-01-02)
 
 
