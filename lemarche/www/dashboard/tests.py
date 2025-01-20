@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -88,7 +90,11 @@ class DisabledEmailEditViewTest(TestCase):
             self.assertContains(response, group.display_name)
             self.assertContains(response, " checked>", count=2)
 
-    def test_form_submission_updates_preferences(self):
+    @patch("lemarche.utils.apis.api_brevo.sib_api_v3_sdk.ContactsApi")
+    def test_form_submission_updates_preferences_with_marketing_disabled(self, mock_contacts_api):
+        # Setup the mock
+        mock_api_instance = mock_contacts_api.return_value
+
         self.assertEqual(self.user.disabled_emails.count(), 0)
         self.client.force_login(self.user)
         response = self.client.post(
@@ -99,7 +105,40 @@ class DisabledEmailEditViewTest(TestCase):
             },
             follow=True,
         )
+
+        # Verify the API was called correctly
+        mock_api_instance.update_contact.assert_called_once()
+        call_args = mock_api_instance.update_contact.call_args
+        self.assertEqual(call_args[1]["identifier"], self.user.email)
+        self.assertEqual(call_args[1]["update_contact"].email_blacklisted, True)
+
         self.assertContains(response, "Vos préférences de notifications ont été mises à jour.")
         self.user.refresh_from_db()
         self.assertEqual(self.user.disabled_emails.count(), 1)
         self.assertEqual(self.user.disabled_emails.first().group.pk, 2)
+
+    @patch("lemarche.utils.apis.api_brevo.sib_api_v3_sdk.ContactsApi")
+    def test_form_submission_updates_preferences_with_marketing_enabled(self, mock_contacts_api):
+        # Setup the mock
+        mock_api_instance = mock_contacts_api.return_value
+
+        self.assertEqual(self.user.disabled_emails.count(), 0)
+        self.client.force_login(self.user)
+        response = self.client.post(
+            self.url,
+            {
+                "email_group_1": True,
+                "email_group_2": True,
+            },
+            follow=True,
+        )
+
+        # Verify the API was called correctly
+        mock_api_instance.update_contact.assert_called_once()
+        call_args = mock_api_instance.update_contact.call_args
+        self.assertEqual(call_args[1]["identifier"], self.user.email)
+        self.assertEqual(call_args[1]["update_contact"].email_blacklisted, False)
+
+        self.assertContains(response, "Vos préférences de notifications ont été mises à jour.")
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.disabled_emails.count(), 0)
